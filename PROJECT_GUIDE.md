@@ -15,6 +15,7 @@ ToolKit 是一个自用优先的纯前端工具站，目标是把日常开发、
 - YAML 转换：yaml
 - 数据持久化：localStorage
 - 当前形态：纯前端静态站，适合后续部署到 GitHub Pages
+- 部署：已配置 GitHub Actions，推送 `main` 后自动部署 GitHub Pages
 
 常用命令：
 
@@ -47,7 +48,8 @@ src/
   index.css            全局样式和响应式布局
   components/          通用组件
   data/
-    tools.ts           工具注册表，首页、侧边栏、路由都依赖它
+    tools.ts           工具注册表聚合入口
+    tools/             按分类拆分的工具注册表
     references.ts      参考网页数据
   hooks/
     useLocalStorage.ts localStorage 状态 Hook
@@ -59,9 +61,14 @@ src/
 新增工具的推荐流程：
 
 1. 在 `src/tools/` 新建工具组件。
-2. 在 `src/data/tools.ts` 导入组件。
-3. 往 `tools` 数组新增配置，包括 `id`、`path`、`category`、`keywords`、`component` 等。
-4. 运行 `npm run lint` 和 `npm run build`。
+2. 在 `src/tools/index.ts` 导出组件。
+3. 在对应分类文件中注册工具：
+   - `src/data/tools/developer.ts`
+   - `src/data/tools/text.ts`
+   - `src/data/tools/image.ts`
+   - `src/data/tools/life.ts`
+4. 注册配置包括 `id`、`path`、`category`、`keywords`、`component` 等。
+5. 运行 `npm run lint` 和 `npm run build`。
 
 ## 已完成工具
 
@@ -170,12 +177,31 @@ src/
 - 不做营销首页，第一屏应服务“找到并打开工具”。
 - 参考网页和灵感分析是项目的一部分，用来帮助长期演进。
 
+## GitHub Pages 部署
+
+项目已配置：
+
+- `vite.config.ts` 中的 `base: '/Toolkit/'`
+- `src/main.tsx` 中的 React Router `basename`
+- `.github/workflows/deploy.yml`
+- SPA fallback：构建时复制 `dist/index.html` 到 `dist/404.html`
+
+仓库地址：
+
+```txt
+git@github.com:Closerdoor/Toolkit.git
+```
+
+部署地址通常为：
+
+```txt
+https://closerdoor.github.io/Toolkit/
+```
+
 ## 后续建议
 
 优先级较高的下一步：
 
-- GitHub Pages 部署配置和 GitHub Actions。
-- 将工具注册表拆分或生成分组，避免 `tools.ts` 继续膨胀。
 - 给高频工具补复制按钮、示例、错误提示和更专业的解析能力。
 - 改造参考网页为可新增/编辑/删除的 localStorage 数据库。
 - 基于参考网页归纳新的视觉风格，再重做首页和工具页布局。
