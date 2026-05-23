@@ -55,9 +55,16 @@ export function HomePage() {
           <Search size={18} />
           <input className="input" placeholder="搜索 JSON、Base64、正则、二维码..." value={query} onChange={(event) => setQuery(event.target.value)} />
         </div>
-        <div className="category-row">
+        <div className="category-tabs" role="tablist" aria-label="工具分类">
           {(['全部', ...categories] as const).map((item) => (
-            <button className={`chip ${category === item ? 'active' : ''}`} key={item} type="button" onClick={() => setCategory(item)}>
+            <button
+              aria-selected={category === item}
+              className={`category-tab ${category === item ? 'active' : ''}`}
+              key={item}
+              role="tab"
+              type="button"
+              onClick={() => setCategory(item)}
+            >
               {item}
             </button>
           ))}
