@@ -23,7 +23,6 @@ export function ToolCard({ tool, onOpen }: Props) {
         </div>
         <div className="tool-card-title">
           <h3>{tool.name}</h3>
-          <span>{tool.category}</span>
         </div>
       </div>
       <div className="tool-card-copy">
