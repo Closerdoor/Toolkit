@@ -326,14 +326,14 @@ p {
 
 .tool-card {
   position: relative;
-  min-height: 286px;
+  min-height: 204px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 13px;
   overflow: hidden;
-  padding: 12px;
+  padding: 16px;
   border: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
-  border-radius: 18px;
+  border-radius: 16px;
   text-decoration: none;
   background: var(--surface);
   box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
@@ -359,11 +359,20 @@ p {
   opacity: 1;
 }
 
+.tool-card-topline {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+}
+
 .tool-card-visual {
   position: relative;
   display: grid;
   place-items: center;
-  height: 124px;
+  flex: 0 0 auto;
+  width: 56px;
+  height: 56px;
   overflow: hidden;
   border-radius: 14px;
   background:
@@ -391,18 +400,18 @@ p {
 }
 
 .visual-glow-one {
-  width: 78px;
-  height: 78px;
-  left: 22px;
-  top: 18px;
+  width: 34px;
+  height: 34px;
+  left: 4px;
+  top: 3px;
   background: rgba(255, 255, 255, 0.28);
 }
 
 .visual-glow-two {
-  width: 92px;
-  height: 92px;
-  right: -18px;
-  bottom: -22px;
+  width: 42px;
+  height: 42px;
+  right: -12px;
+  bottom: -14px;
   background: rgba(255, 255, 255, 0.34);
 }
 
@@ -412,13 +421,13 @@ p {
   display: grid;
   place-items: center;
   flex: 0 0 auto;
-  width: 62px;
-  height: 62px;
+  width: 44px;
+  height: 44px;
   border: 1px solid rgba(255, 255, 255, 0.68);
-  border-radius: 18px;
+  border-radius: 12px;
   color: var(--card-ink);
   background: rgba(255, 255, 255, 0.72);
-  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.1);
   backdrop-filter: blur(12px);
 }
 
@@ -438,7 +447,14 @@ p {
   padding: 0 4px;
 }
 
-.tool-card-copy h3 {
+.tool-card-title {
+  display: grid;
+  min-width: 0;
+  gap: 5px;
+  padding-top: 3px;
+}
+
+.tool-card-title h3 {
   overflow: hidden;
   font-size: 16px;
   line-height: 1.25;
@@ -446,12 +462,21 @@ p {
   white-space: nowrap;
 }
 
+.tool-card-title span {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.3;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .tool-card-copy p {
   display: -webkit-box;
-  min-height: 44px;
+  min-height: 66px;
   overflow: hidden;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
 }
 
 .tag-list {

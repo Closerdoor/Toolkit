@@ -13,15 +13,20 @@ export function ToolCard({ tool, onOpen }: Props) {
 
   return (
     <Link className={`tool-card tone-${tone}`} to={tool.path} onClick={() => onOpen?.(tool.id)}>
-      <div className="tool-card-visual" aria-hidden="true">
-        <span className="visual-glow visual-glow-one" />
-        <span className="visual-glow visual-glow-two" />
-        <span className="tool-icon">
-          <Icon size={30} strokeWidth={1.9} />
-        </span>
+      <div className="tool-card-topline">
+        <div className="tool-card-visual" aria-hidden="true">
+          <span className="visual-glow visual-glow-one" />
+          <span className="visual-glow visual-glow-two" />
+          <span className="tool-icon">
+            <Icon size={26} strokeWidth={1.9} />
+          </span>
+        </div>
+        <div className="tool-card-title">
+          <h3>{tool.name}</h3>
+          <span>{tool.category}</span>
+        </div>
       </div>
       <div className="tool-card-copy">
-        <h3>{tool.name}</h3>
         <p>{tool.description}</p>
       </div>
       <div className="tag-list">
