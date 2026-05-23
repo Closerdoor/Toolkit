@@ -503,30 +503,42 @@ p {
 
 .tool-card-action {
   position: absolute;
-  right: 14px;
-  bottom: 14px;
+  left: 50%;
+  bottom: 16px;
   z-index: 1;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-  min-height: 34px;
-  padding: 7px 10px;
-  border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--border));
+  min-width: 128px;
+  min-height: 36px;
+  padding: 8px 16px;
+  border: 1px solid var(--accent);
   border-radius: 999px;
-  color: var(--accent);
-  background: color-mix(in srgb, var(--surface) 94%, transparent);
-  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.1);
+  color: white;
+  background: var(--accent);
+  box-shadow: 0 10px 22px color-mix(in srgb, var(--accent) 28%, transparent);
   font-size: 13px;
   font-weight: 700;
   opacity: 0;
-  transform: translateY(8px);
+  transform: translate(-50%, 8px);
   transition: opacity 0.16s ease, transform 0.16s ease;
 }
 
 .tool-card:hover .tool-card-action,
 .tool-card:focus-visible .tool-card-action {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate(-50%, 0);
+}
+
+.tool-card:hover .tag-list,
+.tool-card:focus-visible .tag-list {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.tag-list {
+  transition: opacity 0.16s ease, transform 0.16s ease;
 }
 
 .tone-0 {
