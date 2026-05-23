@@ -37,7 +37,7 @@ export function ToolCard({ tool, onOpen }: Props) {
         ))}
       </div>
       <span className="tool-card-action">
-        打开工具
+        立即使用
         <ArrowRight size={15} />
       </span>
     </Link>
