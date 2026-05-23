@@ -319,30 +319,31 @@ p {
 
 .tool-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
   margin-top: 22px;
 }
 
 .tool-card {
   position: relative;
-  height: 142px;
+  height: 190px;
   display: flex;
   flex-direction: column;
-  gap: 9px;
+  gap: 12px;
   overflow: hidden;
-  padding: 12px;
+  padding: 16px;
   border: 1px solid color-mix(in srgb, var(--border) 62%, transparent);
   border-radius: 8px;
   text-decoration: none;
   background: var(--surface);
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+  box-shadow: 0 0 0 rgba(40, 41, 61, 0);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .tool-card:hover {
-  border-color: color-mix(in srgb, var(--border) 78%, var(--accent));
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
   transform: none;
-  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.07);
+  box-shadow: 0 0 4px rgba(40, 41, 61, 0.02), 0 2px 24px rgba(40, 41, 61, 0.08);
 }
 
 .tool-card::after {
@@ -362,7 +363,7 @@ p {
 .tool-card-topline {
   display: flex;
   align-items: flex-start;
-  gap: 8px;
+  gap: 12px;
   min-width: 0;
 }
 
@@ -371,8 +372,8 @@ p {
   display: grid;
   place-items: center;
   flex: 0 0 auto;
-  width: 29px;
-  height: 29px;
+  width: 40px;
+  height: 40px;
   overflow: hidden;
   border-radius: 4px;
   background:
@@ -386,9 +387,9 @@ p {
   inset: 0;
   opacity: 0.56;
   background-image:
-    radial-gradient(circle at 22px 22px, rgba(255, 255, 255, 0.42) 0 1px, transparent 1px),
+    radial-gradient(circle at 28px 28px, rgba(255, 255, 255, 0.42) 0 1px, transparent 1px),
     linear-gradient(120deg, rgba(255, 255, 255, 0.2), transparent 45%);
-  background-size: 18px 18px, 100% 100%;
+  background-size: 24px 24px, 100% 100%;
 }
 
 .visual-glow {
@@ -400,18 +401,18 @@ p {
 }
 
 .visual-glow-one {
-  width: 18px;
-  height: 18px;
-  left: 2px;
-  top: 2px;
+  width: 24px;
+  height: 24px;
+  left: 3px;
+  top: 3px;
   background: rgba(255, 255, 255, 0.28);
 }
 
 .visual-glow-two {
-  width: 22px;
-  height: 22px;
-  right: -6px;
-  bottom: -7px;
+  width: 30px;
+  height: 30px;
+  right: -8px;
+  bottom: -9px;
   background: rgba(255, 255, 255, 0.34);
 }
 
@@ -421,8 +422,8 @@ p {
   display: grid;
   place-items: center;
   flex: 0 0 auto;
-  width: 29px;
-  height: 29px;
+  width: 40px;
+  height: 40px;
   border: 1px solid rgba(255, 255, 255, 0.68);
   border-radius: 4px;
   color: var(--card-ink);
@@ -437,13 +438,13 @@ p {
 }
 
 .tool-card p {
-  font-size: 10px;
-  line-height: 1.55;
+  font-size: 14px;
+  line-height: 1.5715;
 }
 
 .tool-card-copy {
   display: grid;
-  gap: 5px;
+  gap: 8px;
   padding: 0;
 }
 
@@ -451,14 +452,14 @@ p {
   display: grid;
   min-width: 0;
   align-items: center;
-  min-height: 29px;
+  min-height: 40px;
 }
 
 .tool-card-title h3 {
   overflow: hidden;
-  font-size: 11px;
-  font-weight: 720;
-  line-height: 1.25;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5715;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -469,28 +470,34 @@ p {
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
-  font-size: 10px;
-  line-height: 1.55;
+  font-size: 14px;
+  line-height: 1.5715;
 }
 
 .tag-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  column-gap: 8px;
+  row-gap: 8px;
+  height: 24px;
+  overflow: hidden;
   padding: 0;
+  opacity: 1;
   margin-top: auto;
+  transition: opacity 0.5s ease, transform 0.16s ease;
 }
 
 .tag {
   display: inline-flex;
   align-items: center;
-  min-height: 16px;
-  padding: 2px 7px;
+  min-height: 24px;
+  padding: 0 8px;
   border-radius: 3px;
   color: var(--muted);
   background: color-mix(in srgb, var(--surface-2) 78%, transparent);
-  font-size: 9px;
-  line-height: 1.2;
+  font-size: 12px;
+  line-height: 22px;
+  white-space: nowrap;
 }
 
 .category-tag {
@@ -500,22 +507,22 @@ p {
 
 .tool-card-action {
   position: absolute;
-  left: 12px;
-  right: 12px;
-  bottom: 12px;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
   z-index: 1;
   display: grid;
-  grid-template-columns: 102px minmax(0, 1fr) 24px;
+  grid-template-columns: 136px minmax(0, 1fr) 32px;
   align-items: center;
-  gap: 6px;
-  min-height: 24px;
+  gap: 8px;
+  min-height: 32px;
   padding: 0;
   border: 0;
   border-radius: 0;
   color: var(--text);
   background: transparent;
   box-shadow: none;
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 700;
   opacity: 0;
   transform: translateY(8px);
@@ -534,17 +541,13 @@ p {
   transform: translateY(6px);
 }
 
-.tag-list {
-  transition: opacity 0.16s ease, transform 0.16s ease;
-}
-
 .tool-card-primary-action,
 .tool-card-secondary-action,
 .tool-card-menu-action {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 24px;
+  min-height: 32px;
   border-radius: 4px;
 }
 
@@ -837,6 +840,12 @@ p {
   background: var(--surface);
 }
 
+@media (max-width: 1280px) {
+  .tool-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 1080px) {
   .workbench {
     grid-template-columns: 220px minmax(0, 1fr);
@@ -845,6 +854,10 @@ p {
   .info-panel {
     grid-column: 2;
     position: static;
+  }
+
+  .tool-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -880,7 +893,7 @@ p {
   }
 
   .tool-card {
-    height: 150px;
+    height: 190px;
   }
 
   .tool-card-action {
