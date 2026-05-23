@@ -319,19 +319,19 @@ p {
 
 .tool-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   gap: 16px;
   margin-top: 22px;
 }
 
 .tool-card {
   position: relative;
-  min-height: 204px;
+  height: 168px;
   display: flex;
   flex-direction: column;
-  gap: 13px;
+  gap: 10px;
   overflow: hidden;
-  padding: 16px;
+  padding: 14px;
   border: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
   border-radius: 16px;
   text-decoration: none;
@@ -371,10 +371,10 @@ p {
   display: grid;
   place-items: center;
   flex: 0 0 auto;
-  width: 56px;
-  height: 56px;
+  width: 52px;
+  height: 52px;
   overflow: hidden;
-  border-radius: 14px;
+  border-radius: 13px;
   background:
     linear-gradient(135deg, var(--card-a), var(--card-b)),
     var(--surface-2);
@@ -421,8 +421,8 @@ p {
   display: grid;
   place-items: center;
   flex: 0 0 auto;
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border: 1px solid rgba(255, 255, 255, 0.68);
   border-radius: 12px;
   color: var(--card-ink);
@@ -443,8 +443,8 @@ p {
 
 .tool-card-copy {
   display: grid;
-  gap: 8px;
-  padding: 0 4px;
+  gap: 6px;
+  padding: 0 2px;
 }
 
 .tool-card-title {
@@ -473,17 +473,17 @@ p {
 
 .tool-card-copy p {
   display: -webkit-box;
-  min-height: 66px;
+  min-height: 42px;
   overflow: hidden;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
 }
 
 .tag-list {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  padding: 0 4px 2px;
+  padding: 0 2px 1px;
   margin-top: auto;
 }
 
@@ -504,7 +504,7 @@ p {
 .tool-card-action {
   position: absolute;
   left: 50%;
-  bottom: 16px;
+  bottom: 14px;
   z-index: 1;
   display: inline-flex;
   align-items: center;
@@ -848,6 +848,14 @@ p {
   .three-col,
   .stats-strip {
     grid-template-columns: 1fr;
+  }
+
+  .tool-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tool-card {
+    height: 176px;
   }
 
   .sidebar,
