@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, ChevronDown } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import type { ToolItem } from '../data/tools'
 
 type Props = {
@@ -40,10 +40,6 @@ export function ToolCard({ tool, onOpen }: Props) {
         <span className="tool-card-primary-action">
           <ArrowRight size={18} />
           立即使用
-        </span>
-        <span className="tool-card-secondary-action">克隆并修改</span>
-        <span className="tool-card-menu-action">
-          <ChevronDown size={18} />
         </span>
       </span>
     </Link>
