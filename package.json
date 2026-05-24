@@ -11,11 +11,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "jsqr": "^1.4.0",
     "lucide-react": "^1.16.0",
+    "prettier": "^3.8.3",
     "qrcode": "^1.5.4",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-router-dom": "^7.15.1",
+    "turndown": "^7.2.4",
     "yaml": "^2.9.0"
   },
   "devDependencies": {
@@ -26,6 +29,7 @@
     "@types/qrcode": "^1.5.6",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@types/turndown": "^5.0.6",
     "@vitejs/plugin-react": "^6.0.2",
     "chrome-remote-interface": "^0.34.0",
     "eslint": "^10.3.0",

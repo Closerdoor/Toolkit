@@ -106,5 +106,18 @@ export const textTools: ToolItem[] = [
       component: Tools.TextStatsTool,
       localOnly: true,
       references: [],
+    },
+  {
+      id: 'html-to-markdown',
+      name: 'HTML 转 Markdown',
+      path: '/tools/html-to-markdown',
+      category: '文本编码',
+      description: '把 HTML 内容转换成 Markdown，适合迁移文章、说明文档和富文本片段。',
+      keywords: ['html', 'markdown', 'md', '转换'],
+      tags: ['HTML', 'Markdown'],
+      icon: Icons.FileCode,
+      component: Tools.HtmlToMarkdownTool,
+      localOnly: true,
+      references: [],
     }
 ]
