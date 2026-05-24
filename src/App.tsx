@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { NavLink, Route, Routes } from 'react-router-dom'
-import { BookOpen, Info, Moon, Sun, Wrench } from 'lucide-react'
+import { BookOpen, Info, LayoutGrid, Moon, Sun, Wrench } from 'lucide-react'
+import { AnakinDemoPage } from './pages/AnakinDemoPage'
 import { AboutPage } from './pages/AboutPage'
 import { HomePage } from './pages/HomePage'
 import { ReferencesPage } from './pages/ReferencesPage'
@@ -33,6 +34,10 @@ function App() {
             <BookOpen size={16} />
             参考网页
           </NavLink>
+          <NavLink className="nav-link" to="/anakin-demo">
+            <LayoutGrid size={16} />
+            Anakin Demo
+          </NavLink>
           <NavLink className="nav-link" to="/about">
             <Info size={16} />
             关于
@@ -53,6 +58,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/tools/:toolId" element={<ToolPage />} />
         <Route path="/references" element={<ReferencesPage />} />
+        <Route path="/anakin-demo" element={<AnakinDemoPage />} />
         <Route path="/about" element={<AboutPage />} />
       </Routes>
     </div>
