@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { ChevronLeft, ChevronRight, Wrench } from 'lucide-react'
-import { categories, tools } from '../data/tools'
+import { getToolsForGroup, toolNavigationGroups } from '../data/toolGroups'
 
 type Props = {
   collapsed: boolean
@@ -23,20 +23,18 @@ export function ToolSidebar({ collapsed, theme, onCollapseChange, onToggleTheme 
         </div>
 
         <nav className="tool-quick-content">
-          {categories.map((category) => (
-            <div className="tool-quick-group" key={category}>
-              <div className="tool-quick-category">{category}</div>
-              {tools
-                .filter((tool) => tool.category === category)
-                .map((tool) => {
-                  const Icon = tool.icon
-                  return (
-                    <NavLink className="tool-quick-item" key={tool.id} to={tool.path}>
-                      <Icon size={16} />
-                      <span>{tool.name}</span>
-                    </NavLink>
-                  )
-                })}
+          {toolNavigationGroups.map((group) => (
+            <div className="tool-quick-group" key={group.id}>
+              <div className="tool-quick-category">{group.label}</div>
+              {getToolsForGroup(group).map((tool) => {
+                const Icon = tool.icon
+                return (
+                  <NavLink className="tool-quick-item" key={tool.id} to={tool.path}>
+                    <Icon size={16} />
+                    <span>{tool.name}</span>
+                  </NavLink>
+                )
+              })}
             </div>
           ))}
         </nav>

@@ -1,6 +1,7 @@
 import { useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { MoreHorizontal, Search } from 'lucide-react'
 import { ToolCard } from '../components/ToolCard'
+import { toolNavigationGroups } from '../data/toolGroups'
 import { catalogTools, type ToolItem } from '../data/tools'
 import { useLocalStorage } from '../hooks/useLocalStorage'
 
@@ -11,29 +12,15 @@ type ToolChannel = {
 
 const toolChannels: ToolChannel[] = [
   { label: '推荐', match: () => true },
-  { label: 'AI 模型', match: (tool) => tool.category === '视觉图片' || tool.tags.some((tag) => ['图片', '生成', '二维码'].includes(tag)) },
-  { label: '写作', match: (tool) => tool.category === '文本编码' || tool.tags.some((tag) => ['文本', 'Markdown', '清理'].includes(tag)) },
-  { label: '文案', match: (tool) => tool.category === '文本编码' || tool.tags.some((tag) => ['文案', '文本', '大小写'].includes(tag)) },
-  { label: '图像生成', match: (tool) => tool.category === '视觉图片' },
-  { label: '电商', match: (tool) => tool.category === '生活实用' || tool.tags.some((tag) => ['价格', '折扣', '清单'].includes(tag)) },
-  { label: '外贸', match: (tool) => tool.category === '文本编码' || tool.tags.some((tag) => ['单位', '汇率', '时间'].includes(tag)) },
-  { label: '职业', match: (tool) => tool.tags.some((tag) => ['简历', '职业', '计划'].includes(tag)) },
-  { label: '编程', match: (tool) => tool.category === '开发工具' },
-  { label: '设计', match: (tool) => tool.category === '设计工具' || tool.tags.some((tag) => ['SVG', '流程', '封面', '素材'].includes(tag)) },
-  { label: '办公', match: (tool) => tool.tags.some((tag) => ['Markdown', '片段', '笔记', '文档'].includes(tag)) },
-  { label: '通用', match: () => true },
-  { label: '生活', match: (tool) => tool.category === '生活实用' },
-  { label: '翻译', match: (tool) => tool.tags.some((tag) => ['URL', '编码', '文本'].includes(tag)) },
-  { label: '游戏', match: (tool) => tool.category === '游戏娱乐' || tool.tags.some((tag) => ['随机', '分组', '游戏'].includes(tag)) },
-  { label: '情感', match: (tool) => tool.tags.some((tag) => ['纪念日', '倒计时'].includes(tag)) },
-  { label: '教育', match: (tool) => tool.tags.some((tag) => ['统计', '学习', '文本'].includes(tag)) },
-  { label: '销售', match: (tool) => tool.tags.some((tag) => ['二维码', '链接', '图片'].includes(tag)) },
-  { label: '娱乐', match: (tool) => tool.tags.some((tag) => ['表情包', '趣味', '随机'].includes(tag)) },
+  ...toolNavigationGroups.map((group) => ({
+    label: group.label,
+    match: (tool: ToolItem) => group.toolIds.includes(tool.id),
+  })),
 ]
 
 function getChannelTabWidth(label: string) {
-  if (label === 'AI 模型') return 81
-  if (label === '图像生成') return 92
+  if (label.length >= 5) return 104
+  if (label.length >= 4) return 92
   return 64
 }
 

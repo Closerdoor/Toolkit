@@ -340,5 +340,18 @@ export const lifeTools: ToolItem[] = [
       component: Tools.SphereEngineerTool,
       localOnly: true,
       references: [],
+    },
+  {
+      id: 'percentage-calculator',
+      name: '百分比计算器',
+      path: '/tools/percentage-calculator',
+      category: '生活实用',
+      description: '计算一个数值占总量的百分比。',
+      keywords: ['percentage', 'percent', '百分比'],
+      tags: ['计算器', '百分比'],
+      icon: Icons.Hash,
+      component: Tools.PercentageCalculatorTool,
+      localOnly: true,
+      references: [],
     }
 ]
