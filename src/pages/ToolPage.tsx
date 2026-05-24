@@ -1,26 +1,34 @@
-import { Link, Navigate, useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 import { Star } from 'lucide-react'
 import { ToolSidebar } from '../components/ToolSidebar'
-import { references } from '../data/references'
 import { getToolById } from '../data/tools'
 import { useLocalStorage } from '../hooks/useLocalStorage'
 
-export function ToolPage() {
+type Props = {
+  theme: 'light' | 'dark'
+  onToggleTheme: (theme: 'light' | 'dark') => void
+}
+
+export function ToolPage({ theme, onToggleTheme }: Props) {
   const { toolId } = useParams()
   const tool = getToolById(toolId)
   const [favorites, setFavorites] = useLocalStorage<string[]>('toolkit-favorite-tools', [])
+  const [sidebarCollapsed, setSidebarCollapsed] = useLocalStorage('toolkit-tool-sidebar-collapsed', false)
 
   if (!tool) return <Navigate to="/" replace />
 
   const ToolComponent = tool.component
   const isFavorite = favorites.includes(tool.id)
-  const relatedReferences = references.filter((reference) => tool.references.includes(reference.id))
 
   return (
-    <main className="page">
-      <div className="workbench">
-        <ToolSidebar />
-
+    <main className={`tool-detail-page ${sidebarCollapsed ? 'sidebar-collapsed' : 'sidebar-open'}`}>
+      <ToolSidebar
+        collapsed={sidebarCollapsed}
+        theme={theme}
+        onCollapseChange={setSidebarCollapsed}
+        onToggleTheme={onToggleTheme}
+      />
+      <div className="tool-detail-workspace">
         <section className="tool-panel">
           <header className="tool-panel-header">
             <div>
@@ -45,28 +53,6 @@ export function ToolPage() {
             <ToolComponent />
           </div>
         </section>
-
-        <aside className="info-panel">
-          <h3>工具说明</h3>
-          <p>{tool.localOnly ? '当前工具在浏览器本地处理输入内容，不会上传到服务器。' : '当前工具可能需要调用外部服务。'}</p>
-          <h3 style={{ marginTop: 18 }}>参考网页</h3>
-          {relatedReferences.length > 0 ? (
-            <ul>
-              {relatedReferences.map((reference) => (
-                <li key={reference.id}>
-                  <a href={reference.url} target="_blank" rel="noreferrer">
-                    {reference.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>暂未记录关联参考网页。</p>
-          )}
-          <p style={{ marginTop: 18 }}>
-            <Link to="/references">查看全部参考网页</Link>
-          </p>
-        </aside>
       </div>
     </main>
   )

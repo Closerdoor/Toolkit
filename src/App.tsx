@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { NavLink, Route, Routes } from 'react-router-dom'
+import { NavLink, Route, Routes, useLocation } from 'react-router-dom'
 import { BookOpen, Info, LayoutGrid, Moon, Sun, Wrench } from 'lucide-react'
 import { AnakinDemoPage } from './pages/AnakinDemoPage'
 import { AboutPage } from './pages/AboutPage'
@@ -9,14 +9,16 @@ import { ToolPage } from './pages/ToolPage'
 import { useLocalStorage } from './hooks/useLocalStorage'
 
 function App() {
+  const location = useLocation()
   const [theme, setTheme] = useLocalStorage<'light' | 'dark'>('toolkit-theme', 'light')
+  const isToolRoute = location.pathname.startsWith('/tools/')
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
   }, [theme])
 
   return (
-    <div className="app-shell">
+    <div className={`app-shell ${isToolRoute ? 'tool-route' : ''}`}>
       <header className="topbar">
         <NavLink className="brand" to="/">
           <span className="brand-mark">
@@ -56,7 +58,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/tools/:toolId" element={<ToolPage />} />
+        <Route path="/tools/:toolId" element={<ToolPage theme={theme} onToggleTheme={setTheme} />} />
         <Route path="/references" element={<ReferencesPage />} />
         <Route path="/anakin-demo" element={<AnakinDemoPage />} />
         <Route path="/about" element={<AboutPage />} />

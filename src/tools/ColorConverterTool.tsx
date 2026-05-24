@@ -45,10 +45,14 @@ export function ColorConverterTool() {
     const rgb = hexToRgb(hex)
     if (!rgb) return null
     const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b)
+    const normalizedHex = `#${hex.replace('#', '').toUpperCase()}`
+    const palette = [-28, -14, 0, 14, 28].map((shift) => `hsl(${(hsl.h + shift + 360) % 360}, ${hsl.s}%, ${Math.min(92, Math.max(18, hsl.l))}%)`)
     return {
-      hex: `#${hex.replace('#', '').toUpperCase()}`,
+      hex: normalizedHex,
       rgb: `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`,
       hsl: `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`,
+      css: `linear-gradient(135deg, ${normalizedHex}, ${palette.at(-1)})`,
+      palette,
     }
   }, [hex])
 
@@ -61,11 +65,18 @@ export function ColorConverterTool() {
           <input type="color" value={values?.hex ?? '#000000'} onChange={(event) => setHex(event.target.value)} />
         </div>
         <div className="color-preview">
-          <div className="color-swatch" style={{ background: values?.hex ?? 'transparent' }} />
+          <div className="color-swatch" style={{ background: values?.css ?? 'transparent' }} />
         </div>
       </div>
-      <pre className="result-box">{values ? `${values.hex}\n${values.rgb}\n${values.hsl}` : '请输入 6 位 HEX 颜色，例如 #0f766e'}</pre>
-      <button className="button" type="button" onClick={() => values && copyText(`${values.hex}\n${values.rgb}\n${values.hsl}`)}>
+      {values && (
+        <div className="palette-row">
+          {values.palette.map((color) => (
+            <button className="palette-chip" key={color} style={{ background: color }} type="button" onClick={() => copyText(color)} title={color} />
+          ))}
+        </div>
+      )}
+      <pre className="result-box">{values ? `${values.hex}\n${values.rgb}\n${values.hsl}\n${values.css}` : '请输入 6 位 HEX 颜色，例如 #0f766e'}</pre>
+      <button className="button" type="button" onClick={() => values && copyText(`${values.hex}\n${values.rgb}\n${values.hsl}\n${values.css}`)}>
         <Copy size={16} />
         复制颜色值
       </button>
