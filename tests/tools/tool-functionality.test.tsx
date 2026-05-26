@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest'
 import {
   Base64Tool,
   Bip39GeneratorTool,
+  BuzzwordGeneratorTool,
   DockerRunComposeTool,
   IntegerBaseConverterTool,
   IbanValidatorTool,
@@ -15,6 +16,7 @@ import {
   RomanNumeralConverterTool,
   SafelinkDecoderTool,
   TextStatsTool,
+  WhoIsThatImageTool,
 } from '../../src/tools'
 
 function textareas() {
@@ -40,6 +42,23 @@ describe('representative tool behavior', () => {
     fireEvent.change(textareas()[0], { target: { value: 'one\ntwo' } })
     expect(screen.getByText(/行数/)).toBeInTheDocument()
     expect(screen.getByText(/2/)).toBeInTheDocument()
+  })
+
+  it('rewrites plain text into policy and internet buzzword styles', () => {
+    render(<BuzzwordGeneratorTool />)
+    fireEvent.change(textareas()[0], { target: { value: '我们要提升工具体验' } })
+    expect(screen.getByDisplayValue(/关键抓手/)).toBeInTheDocument()
+
+    fireEvent.click(screen.getByText(/互联网黑话/))
+    expect(screen.getByDisplayValue(/增量场景|蓝海/)).toBeInTheDocument()
+  })
+
+  it('renders the who-is-that poster generator controls', () => {
+    render(<WhoIsThatImageTool />)
+    expect(screen.getByText('角色图片')).toBeInTheDocument()
+    expect(screen.getByDisplayValue('神秘角色')).toBeInTheDocument()
+    expect(screen.getByText('上传图片后生成剪影提问图')).toBeInTheDocument()
+    expect(screen.getByText('上传图片后生成答案揭晓图')).toBeInTheDocument()
   })
 
   it('converts integer bases', () => {

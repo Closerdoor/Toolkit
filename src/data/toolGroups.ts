@@ -90,6 +90,7 @@ export const toolNavigationGroups: ToolGroup[] = [
     label: '文本',
     toolIds: [
       'markdown-preview',
+      'buzzword-generator',
       'text-cleaner',
       'text-stats',
       'emoji-picker',
@@ -115,6 +116,7 @@ export const toolNavigationGroups: ToolGroup[] = [
       'long-image',
       'placeholder-image',
       'nine-grid',
+      'who-is-that-image',
       'meme-generator',
       'cover-creator',
       'subtitle-screenshot',
