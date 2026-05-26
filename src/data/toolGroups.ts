@@ -71,6 +71,11 @@ export const toolNavigationGroups: ToolGroup[] = [
       'hash',
       'crypto-tool',
       'hmac-generator',
+      'bcrypt',
+      'bip39-generator',
+      'otp-generator',
+      'rsa-key-pair',
+      'pdf-signature-checker',
       'password-generator',
       'password-strength',
       'uuid',
@@ -124,12 +129,12 @@ export const toolNavigationGroups: ToolGroup[] = [
   {
     id: 'web',
     label: 'Web',
-    toolIds: ['url-params', 'user-agent-parser', 'html-preview', 'mime-lookup', 'http-status', 'meta-tag-generator', 'keycode-info', 'device-information'],
+    toolIds: ['url-params', 'user-agent-parser', 'html-preview', 'mime-lookup', 'http-status', 'meta-tag-generator', 'keycode-info', 'device-information', 'safelink-decoder'],
   },
   {
     id: 'network',
     label: '网络',
-    toolIds: ['ip-cidr', 'ipv4-subnet-calculator', 'ipv4-address-converter', 'ipv4-range', 'ipv6-ula-generator', 'mac-generator'],
+    toolIds: ['ip-cidr', 'ipv4-subnet-calculator', 'ipv4-address-converter', 'ipv4-range', 'ipv6-ula-generator', 'mac-generator', 'mac-address-lookup'],
   },
   {
     id: 'math-measurement',
@@ -162,6 +167,11 @@ export const toolNavigationGroups: ToolGroup[] = [
       'local-notes',
       'inspiration-analysis',
     ],
+  },
+  {
+    id: 'data',
+    label: '数据校验',
+    toolIds: ['phone-parser', 'iban-validator', 'email-normalizer'],
   },
   {
     id: 'games',

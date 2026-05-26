@@ -34,6 +34,7 @@ const expansiveToolIds = new Set([
   'svg-to-react',
   'docker-run-compose',
   'svg-placeholder',
+  'safelink-decoder',
   'svg-workflow',
   'code-to-image',
   'image-crop',

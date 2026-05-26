@@ -11,7 +11,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@scure/bip39": "^2.2.0",
+    "bcryptjs": "^3.0.3",
+    "ibantools": "^4.5.4",
     "jsqr": "^1.4.0",
+    "libphonenumber-js": "^1.13.3",
     "lucide-react": "^1.16.0",
     "prettier": "^3.8.3",
     "qrcode": "^1.5.4",
