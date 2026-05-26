@@ -25,9 +25,20 @@ export function LongImageTool() {
 
   return (
     <div className="tool-form">
-      <input className="input" type="file" accept="image/*" multiple onChange={(event) => handleFiles(event.target.files)} />
-      <div className="qr-preview">{preview && <img src={preview} alt="长图预览" style={{ maxWidth: '100%', maxHeight: 420 }} />}</div>
-      {preview && <button className="button" type="button" onClick={() => downloadDataUrl(preview, 'long-image.png')}>下载长图</button>}
+      <div className="field">
+        <label>Images to stitch</label>
+        <input className="input" type="file" accept="image/*" multiple onChange={(event) => handleFiles(event.target.files)} />
+      </div>
+      <div className="qr-preview">
+        {preview ? (
+          <img src={preview} alt="Long image preview" style={{ maxWidth: '100%', maxHeight: 420 }} />
+        ) : (
+          <p className="muted">Upload multiple images to combine them vertically into one long PNG.</p>
+        )}
+      </div>
+      <button className="button" type="button" onClick={() => downloadDataUrl(preview, 'long-image.png')} disabled={!preview}>
+        Download long image
+      </button>
     </div>
   )
 }

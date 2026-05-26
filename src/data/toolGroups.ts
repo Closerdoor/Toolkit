@@ -77,7 +77,6 @@ export const toolNavigationGroups: ToolGroup[] = [
       'rsa-key-pair',
       'pdf-signature-checker',
       'password-generator',
-      'password-strength',
       'uuid',
       'ulid',
       'jwt-decoder',

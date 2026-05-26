@@ -158,15 +158,22 @@ export function NineGridTool() {
 
   return (
     <div className="tool-form">
-      <input className="input" type="file" accept="image/*" onChange={(event) => splitImage(event.target.files?.[0] ?? null)} />
-      <div className="nine-grid-preview">
-        {pieces.map((piece, index) => (
-          <button className="nine-grid-piece" key={piece} type="button" onClick={() => downloadDataUrl(piece, `nine-grid-${index + 1}.png`)}>
-            <img src={piece} alt={`九宫格切片 ${index + 1}`} />
-          </button>
-        ))}
+      <div className="field">
+        <label>Source image</label>
+        <input className="input" type="file" accept="image/*" onChange={(event) => splitImage(event.target.files?.[0] ?? null)} />
       </div>
-      {pieces.length > 0 && <p className="status">点击任意切片下载对应图片。</p>}
+      <div className="nine-grid-preview">
+        {pieces.length > 0 ? (
+          pieces.map((piece, index) => (
+            <button className="nine-grid-piece" key={piece} type="button" onClick={() => downloadDataUrl(piece, `nine-grid-${index + 1}.png`)}>
+              <img src={piece} alt={`Nine-grid slice ${index + 1}`} />
+            </button>
+          ))
+        ) : (
+          <p className="muted">Upload an image to crop the centered square and export it as nine equal PNG slices.</p>
+        )}
+      </div>
+      <p className="status">{pieces.length > 0 ? 'Click any slice to download that PNG.' : 'Ready to split an image into a 3 x 3 grid.'}</p>
     </div>
   )
 }

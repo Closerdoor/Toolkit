@@ -1,4 +1,6 @@
+import { Copy } from 'lucide-react'
 import { references } from '../data/references'
+import { copyText } from '../utils/clipboard'
 
 export function InspirationAnalysisTool() {
   const tagCounts = references.flatMap((item) => [...item.tags, ...item.usage]).reduce<Record<string, number>>((acc, tag) => {
@@ -9,8 +11,16 @@ export function InspirationAnalysisTool() {
 
   return (
     <div className="tool-form">
-      <pre className="result-box">{summary || '先录入更多参考网页，再回来做归纳。'}</pre>
-      <p className="muted">这是一个初步分析面板，用来从参考网页标签里观察你关注的功能、交互和视觉方向。</p>
+      <div className="button-row">
+        <button className="button" type="button" onClick={() => copyText(summary)} disabled={!summary}>
+          <Copy size={16} />
+          Copy summary
+        </button>
+      </div>
+      <pre className="result-box">{summary || 'Add more reference pages before generating an inspiration summary.'}</pre>
+      <p className="muted">
+        Summarizes repeated tags and usage scenarios from saved reference pages so the design direction is easier to compare.
+      </p>
     </div>
   )
 }
