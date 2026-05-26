@@ -34,6 +34,7 @@ export const toolNavigationGroups: ToolGroup[] = [
       'keycode-info',
       'device-information',
       'docker-run-compose',
+      'math-evaluator',
     ],
   },
   {
@@ -128,7 +129,7 @@ export const toolNavigationGroups: ToolGroup[] = [
   {
     id: 'network',
     label: '网络',
-    toolIds: ['ip-cidr', 'ipv4-range', 'mac-generator'],
+    toolIds: ['ip-cidr', 'ipv4-subnet-calculator', 'ipv4-address-converter', 'ipv4-range', 'ipv6-ula-generator', 'mac-generator'],
   },
   {
     id: 'math-measurement',
@@ -140,6 +141,10 @@ export const toolNavigationGroups: ToolGroup[] = [
       'loan-calculator',
       'percentage-calculator',
       'roman-numeral',
+      'math-evaluator',
+      'eta-calculator',
+      'chronometer',
+      'temperature-converter',
       'countdown',
       'workday-calculator',
       'anniversary',

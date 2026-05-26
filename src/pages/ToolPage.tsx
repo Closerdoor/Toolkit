@@ -32,6 +32,8 @@ const expansiveToolIds = new Set([
   'html-to-markdown',
   'markdown-to-html',
   'svg-to-react',
+  'docker-run-compose',
+  'svg-placeholder',
   'svg-workflow',
   'code-to-image',
   'image-crop',

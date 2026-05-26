@@ -263,4 +263,18 @@ export const imageTools: ToolItem[] = [
       localOnly: true,
       references: [],
     }
+  ,
+  {
+      id: 'svg-placeholder',
+      name: 'SVG 占位图生成器',
+      path: '/tools/svg-placeholder',
+      category: '视觉图片',
+      description: '生成可复制的 SVG 占位图代码，适合原型和测试图片位。',
+      keywords: ['svg', 'placeholder', 'image'],
+      tags: ['SVG', '占位图'],
+      icon: Icons.Image,
+      component: Tools.SvgPlaceholderTool,
+      localOnly: true,
+      references: [],
+    }
 ]
