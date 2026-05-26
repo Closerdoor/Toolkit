@@ -1500,6 +1500,30 @@ p {
   text-align: center;
 }
 
+.game-scorebar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.shooting-arena {
+  position: relative;
+  width: 100%;
+  min-height: 320px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, var(--border) 1px, transparent 1px),
+    linear-gradient(var(--border) 1px, transparent 1px),
+    var(--surface-2);
+  background-size: 42px 42px;
+}
+
 .target-button {
   width: 104px;
   height: 104px;
@@ -1509,6 +1533,14 @@ p {
   background: radial-gradient(circle, var(--danger) 0 28%, var(--surface) 29% 38%, var(--accent) 39% 100%);
   font-weight: 760;
   box-shadow: 0 18px 35px var(--shadow-color);
+}
+
+.moving-target {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  transform: translate(-50%, -50%);
+  cursor: crosshair;
 }
 
 .glyph-pad {
