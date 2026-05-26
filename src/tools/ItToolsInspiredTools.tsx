@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Copy, RefreshCw } from 'lucide-react'
+import QRCode from 'qrcode'
 import { copyText } from '../utils/clipboard'
 
 function randomFrom(chars: string, length: number) {
@@ -275,6 +276,127 @@ export function NumeronymTool() {
   const [input, setInput] = useState('internationalization')
   const output = input.length <= 3 ? input : `${input[0]}${input.length - 2}${input.at(-1)}`
   return <TextTransformTool input={input} output={output} setInput={setInput} label="Numeronym" />
+}
+
+export function XmlFormatterTool() {
+  const [input, setInput] = useState('<root><name>ToolKit</name><local>true</local></root>')
+  const output = useMemo(() => {
+    try {
+      const parsed = new DOMParser().parseFromString(input, 'application/xml')
+      if (parsed.querySelector('parsererror')) return 'XML 解析失败'
+      return new XMLSerializer().serializeToString(parsed).replace(/></g, '>\n<')
+    } catch {
+      return 'XML 解析失败'
+    }
+  }, [input])
+  return <TextTransformTool input={input} output={output} setInput={setInput} label="格式化 XML" />
+}
+
+function xmlNodeToJson(node: Element): unknown {
+  const children = [...node.children]
+  if (children.length === 0) return node.textContent ?? ''
+  return Object.fromEntries(children.map((child) => [child.tagName, xmlNodeToJson(child)]))
+}
+
+export function XmlJsonTool() {
+  const [input, setInput] = useState('<root><name>ToolKit</name><type>static</type></root>')
+  const output = useMemo(() => {
+    const parsed = new DOMParser().parseFromString(input, 'application/xml')
+    const root = parsed.documentElement
+    if (!root || parsed.querySelector('parsererror')) return 'XML 解析失败'
+    return JSON.stringify({ [root.tagName]: xmlNodeToJson(root) }, null, 2)
+  }, [input])
+  return <TextTransformTool input={input} output={output} setInput={setInput} label="JSON" />
+}
+
+function parseSimpleToml(input: string) {
+  return Object.fromEntries(
+    input
+      .split(/\r?\n/)
+      .map((line) => line.trim())
+      .filter((line) => line && !line.startsWith('#') && line.includes('='))
+      .map((line) => {
+        const [key, ...rest] = line.split('=')
+        const rawValue = rest.join('=').trim().replace(/^"|"$/g, '')
+        return [key.trim(), Number.isNaN(Number(rawValue)) ? rawValue : Number(rawValue)]
+      }),
+  )
+}
+
+export function TomlJsonTool() {
+  const [input, setInput] = useState('name = "ToolKit"\ntools = 128\nlocal = "true"')
+  const output = useMemo(() => JSON.stringify(parseSimpleToml(input), null, 2), [input])
+  return <TextTransformTool input={input} output={output} setInput={setInput} label="JSON" />
+}
+
+export function WifiQrTool() {
+  const [ssid, setSsid] = useState('ToolKit WiFi')
+  const [password, setPassword] = useState('toolkit-secret')
+  const [dataUrl, setDataUrl] = useState('')
+  const content = `WIFI:T:WPA;S:${ssid};P:${password};;`
+  const generate = async () => setDataUrl(await QRCode.toDataURL(content, { width: 240, margin: 2 }))
+  return (
+    <div className="tool-form">
+      <div className="two-col">
+        <input className="input" value={ssid} onChange={(event) => setSsid(event.target.value)} />
+        <input className="input" value={password} onChange={(event) => setPassword(event.target.value)} />
+      </div>
+      <button className="button primary" type="button" onClick={generate}>生成 WiFi 二维码</button>
+      <div className="qr-preview">{dataUrl && <img src={dataUrl} alt="WiFi 二维码" width="240" height="240" />}</div>
+      {dataUrl && <a className="button" href={dataUrl} download="wifi-qrcode.png">下载 PNG</a>}
+    </div>
+  )
+}
+
+function ipv4ToNumber(value: string) {
+  const parts = value.split('.').map(Number)
+  if (parts.length !== 4 || parts.some((part) => !Number.isInteger(part) || part < 0 || part > 255)) return null
+  return parts.reduce((sum, part) => (sum << 8) + part, 0) >>> 0
+}
+
+function numberToIpv4(value: number) {
+  return [24, 16, 8, 0].map((shift) => (value >>> shift) & 255).join('.')
+}
+
+export function Ipv4RangeTool() {
+  const [start, setStart] = useState('192.168.1.1')
+  const [end, setEnd] = useState('192.168.1.10')
+  const output = useMemo(() => {
+    const first = ipv4ToNumber(start)
+    const last = ipv4ToNumber(end)
+    if (first === null || last === null || last < first) return '请输入有效 IPv4 范围'
+    const count = Math.min(256, last - first + 1)
+    return Array.from({ length: count }, (_, index) => numberToIpv4(first + index)).join('\n')
+  }, [end, start])
+  return (
+    <div className="tool-form">
+      <div className="two-col">
+        <input className="input" value={start} onChange={(event) => setStart(event.target.value)} />
+        <input className="input" value={end} onChange={(event) => setEnd(event.target.value)} />
+      </div>
+      <pre className="result-box">{output}</pre>
+      <button className="button" type="button" onClick={() => copyText(output)}><Copy size={16} />复制范围</button>
+    </div>
+  )
+}
+
+export function MacGeneratorTool() {
+  const [mac, setMac] = useState(() => randomMac())
+  return (
+    <div className="tool-form">
+      <pre className="result-box">{mac}</pre>
+      <div className="button-row">
+        <button className="button primary" type="button" onClick={() => setMac(randomMac())}>生成 MAC</button>
+        <button className="button" type="button" onClick={() => copyText(mac)}><Copy size={16} />复制</button>
+      </div>
+    </div>
+  )
+}
+
+function randomMac() {
+  const bytes = crypto.getRandomValues(new Uint8Array(6))
+  bytes[0] = (bytes[0] & 0xfe) | 0x02
+  return [...bytes].map((byte) => byte.toString(16).padStart(2, '0')).join(':')
 }
 
 function TextTransformTool({ input, output, setInput, label }: { input: string; output: string; setInput: (value: string) => void; label: string }) {

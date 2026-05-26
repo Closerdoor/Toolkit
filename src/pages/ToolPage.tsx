@@ -1,6 +1,7 @@
-import { Navigate, useParams } from 'react-router-dom'
+import { Link, Navigate, useParams } from 'react-router-dom'
 import { Star } from 'lucide-react'
 import { ToolSidebar } from '../components/ToolSidebar'
+import { findToolGroup, getToolsForGroup } from '../data/toolGroups'
 import { getToolById } from '../data/tools'
 import { useLocalStorage } from '../hooks/useLocalStorage'
 
@@ -8,6 +9,34 @@ type Props = {
   theme: 'light' | 'dark'
   onToggleTheme: (theme: 'light' | 'dark') => void
 }
+
+const expansiveToolIds = new Set([
+  'json-formatter',
+  'html-preview',
+  'code-formatter',
+  'regex-tester',
+  'regex-replace',
+  'text-diff',
+  'markdown-preview',
+  'json-to-ts',
+  'json-to-rust',
+  'json-path',
+  'json-viewer',
+  'json-diff',
+  'json-to-xml',
+  'yaml-json',
+  'sql-formatter',
+  'xml-formatter',
+  'xml-json',
+  'toml-json',
+  'html-to-markdown',
+  'markdown-to-html',
+  'svg-to-react',
+  'svg-workflow',
+  'code-to-image',
+  'image-crop',
+  'subtitle-screenshot',
+])
 
 export function ToolPage({ theme, onToggleTheme }: Props) {
   const { toolId } = useParams()
@@ -19,9 +48,15 @@ export function ToolPage({ theme, onToggleTheme }: Props) {
 
   const ToolComponent = tool.component
   const isFavorite = favorites.includes(tool.id)
+  const currentGroup = findToolGroup(tool.id)
+  const groupTools = currentGroup ? getToolsForGroup(currentGroup) : []
+  const toolIndex = groupTools.findIndex((item) => item.id === tool.id)
+  const previousTool = toolIndex > 0 ? groupTools[toolIndex - 1] : undefined
+  const nextTool = toolIndex >= 0 && toolIndex < groupTools.length - 1 ? groupTools[toolIndex + 1] : undefined
+  const isExpansive = expansiveToolIds.has(tool.id)
 
   return (
-    <main className={`tool-detail-page ${sidebarCollapsed ? 'sidebar-collapsed' : 'sidebar-open'}`}>
+    <main className={`tool-detail-page ${sidebarCollapsed ? 'sidebar-collapsed' : 'sidebar-open'} ${isExpansive ? 'expansive' : 'compact'}`}>
       <ToolSidebar
         collapsed={sidebarCollapsed}
         theme={theme}
@@ -32,9 +67,15 @@ export function ToolPage({ theme, onToggleTheme }: Props) {
         <section className="tool-panel">
           <header className="tool-panel-header">
             <div>
-              <p className="eyebrow">{tool.category}</p>
-              <h1 style={{ fontSize: 34 }}>{tool.name}</h1>
+              <p className="eyebrow">{currentGroup?.label ?? tool.category}</p>
+              <h1>{tool.name}</h1>
               <p className="lede">{tool.description}</p>
+              {(previousTool || nextTool) && (
+                <div className="tool-neighbor-links">
+                  {previousTool && <Link to={previousTool.path}>← {previousTool.name}</Link>}
+                  {nextTool && <Link to={nextTool.path}>{nextTool.name} →</Link>}
+                </div>
+              )}
             </div>
             <button
               className={`icon-button ${isFavorite ? 'active' : ''}`}

@@ -249,5 +249,18 @@ export const imageTools: ToolItem[] = [
       component: Tools.QrDecodeTool,
       localOnly: true,
       references: [],
+    },
+  {
+      id: 'wifi-qr',
+      name: 'WiFi 二维码生成器',
+      path: '/tools/wifi-qr',
+      category: '视觉图片',
+      description: '生成包含 WiFi 名称和密码的二维码。',
+      keywords: ['wifi', 'qr', 'qrcode', '二维码'],
+      tags: ['WiFi', '二维码'],
+      icon: Icons.Wifi,
+      component: Tools.WifiQrTool,
+      localOnly: true,
+      references: [],
     }
 ]

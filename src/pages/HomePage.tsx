@@ -10,8 +10,7 @@ type ToolChannel = {
   match: (tool: ToolItem) => boolean
 }
 
-const toolChannels: ToolChannel[] = [
-  { label: '推荐', match: () => true },
+const baseToolChannels: ToolChannel[] = [
   ...toolNavigationGroups.map((group) => ({
     label: group.label,
     match: (tool: ToolItem) => group.toolIds.includes(tool.id),
@@ -24,12 +23,12 @@ function getChannelTabWidth(label: string) {
   return 64
 }
 
-function getVisibleChannelCount(availableWidth: number) {
-  const tabWidths = toolChannels.map((item) => getChannelTabWidth(item.label))
+function getVisibleChannelCount(channels: ToolChannel[], availableWidth: number) {
+  const tabWidths = channels.map((item) => getChannelTabWidth(item.label))
   const totalWidth = tabWidths.reduce((sum, width) => sum + width, 0)
   const moreWidth = 64
 
-  if (totalWidth <= availableWidth) return toolChannels.length
+  if (totalWidth <= availableWidth) return channels.length
 
   const fitWidth = Math.max(0, availableWidth - moreWidth)
   let usedWidth = 0
@@ -46,13 +45,22 @@ function getVisibleChannelCount(availableWidth: number) {
 
 export function HomePage() {
   const [query, setQuery] = useState('')
-  const [channel, setChannel] = useState(toolChannels[0].label)
+  const [channel, setChannel] = useState('推荐')
   const [moreOpen, setMoreOpen] = useState(false)
   const tabsWrapRef = useRef<HTMLDivElement>(null)
   const moreCloseTimerRef = useRef<number | null>(null)
-  const [visibleChannelCount, setVisibleChannelCount] = useState(toolChannels.length)
-  const [, setRecent] = useLocalStorage<string[]>('toolkit-recent-tools', [])
+  const [recent, setRecent] = useLocalStorage<string[]>('toolkit-recent-tools', [])
   const [favorites, setFavorites] = useLocalStorage<string[]>('toolkit-favorite-tools', [])
+  const toolChannels = useMemo<ToolChannel[]>(
+    () => [
+      { label: '推荐', match: () => true },
+      { label: '收藏', match: (tool) => favorites.includes(tool.id) },
+      { label: '最近使用', match: (tool) => recent.includes(tool.id) },
+      ...baseToolChannels,
+    ],
+    [favorites, recent],
+  )
+  const [visibleChannelCount, setVisibleChannelCount] = useState(toolChannels.length)
   const visibleChannels = toolChannels.slice(0, visibleChannelCount)
   const overflowChannels = toolChannels.slice(visibleChannelCount)
   const activeOverflowChannel = overflowChannels.some((item) => item.label === channel)
@@ -62,7 +70,7 @@ export function HomePage() {
     if (!tabsWrap) return
 
     const updateVisibleCount = () => {
-      setVisibleChannelCount(getVisibleChannelCount(tabsWrap.clientWidth))
+      setVisibleChannelCount(getVisibleChannelCount(toolChannels, tabsWrap.clientWidth))
     }
 
     updateVisibleCount()
@@ -70,7 +78,7 @@ export function HomePage() {
     const observer = new ResizeObserver(updateVisibleCount)
     observer.observe(tabsWrap)
     return () => observer.disconnect()
-  }, [])
+  }, [toolChannels])
 
   const filteredTools = useMemo(() => {
     const normalized = query.trim().toLowerCase()
@@ -79,7 +87,7 @@ export function HomePage() {
       const searchable = [tool.name, tool.description, tool.category, ...tool.keywords, ...tool.tags].join(' ').toLowerCase()
       return activeChannel.match(tool) && (!normalized || searchable.includes(normalized))
     })
-  }, [channel, query])
+  }, [channel, query, toolChannels])
 
   const rememberTool = (id: string) => {
     setRecent((current) => [id, ...current.filter((item) => item !== id)].slice(0, 8))
